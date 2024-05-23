@@ -1,4 +1,4 @@
-# sem01-dsc-prob
+# Semester-I (Probability and Statistics)
 Practical Questions for UoD (NEP-UGCF) Year-I B.Sc. (Hons.) Mathematics<br>
 **Semester-I (AUG2023) DSC-III Probability and Statistics**
 
