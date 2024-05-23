@@ -1,4 +1,4 @@
-# sem02-dsc-ode
+# Semester-II (Ordinary Differential Equations)
 Practical Questions for UoD (NEP-UGCF) Year-I B.Sc. (Hons.) Mathematics<br>
 **Semester-II (JAN2024) DSC-VI Ordinary Differential Equations**
 
