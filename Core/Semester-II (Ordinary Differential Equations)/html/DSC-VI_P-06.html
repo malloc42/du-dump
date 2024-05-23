@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DSC-VI_P-06</title>
+    <meta name="generator" content="wxMaxima"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/x-mathjax-config">  MathJax.Hub.Config({
+    displayAlign: "left",
+    context: "MathJax",
+    TeX: {TagSide: "left"}
+  })
+</script>
+    <script id="MathJax-script" type="application/javascript" async="true" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">  // A comment that hinders wxWidgets from optimizing this tag too much.
+</script>
+    <link rel="stylesheet" type="text/css" href="DSC-VI_P-06_htmlimg/DSC-VI_P-06.css"/>
+  </head>
+  <body>
+    <!-- ****************************************************** -->
+    <!-- *        Created with wxMaxima version 23.05.1       * -->
+    <!-- ****************************************************** -->
+    <noscript>
+      <div class="error message">
+        <p>Please enable JavaScript in order to get a 2d display of the equations embedded in this web page.</p>
+      </div>
+    </noscript>
+    <p hidden="hidden">\(      \DeclareMathOperator{\abs}{abs}
+      \newcommand{\ensuremath}[1]{\mbox{$#1$}}
+\)</p>
+    <!-- Text cell -->
+    <div class="comment">Lucky Lao
+</div>
+    <!-- Title cell -->
+    <div class="title">
+      <p>DSC-VI : Practical-06
+</p>
+    </div>
+    <!-- Title cell -->
+    <div class="title">
+      <p>Lake Pollution Model
+</p>
+    </div>
+    <!-- Section cell -->
+    <div class="section">
+      <p>  1 Constant flow and constant pollution concentration inflow
+</p>
+    </div>
+    <!-- Text cell -->
+    <div class="comment">c(t): concentration of pollutant in the lake at time t.
+      <br/>F: constant flow rate.
+      <br/>V: constant volume of the lake.
+      <br/>cin: constant concentration of pollutant in the flow entering the lake.
+      <br/>initial condition: c(0)=c0.(5 different initial conditions taken)
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_function">kill</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">all</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_operator">:</span>
+            <span class="code_operator">'</span>
+            <span class="code_function">diff</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">=</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">−</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">sol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ode2</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ic1</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">sol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_operator">=</span>
+            <span class="code_variable">c0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">0</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">3</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">28</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">4</span>
+            <span class="code_operator">·</span>
+            <span class="code_number">12</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">8</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v2</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">6</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v3</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">3</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v4</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">2</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v5</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_function">wxplot2d</span>
+            <span class="code_operator">(</span>
+            <span class="code_operator">[</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v2</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v3</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v4</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v5</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">t</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">2</span>
+            <span class="code_endofline">.</span>
+            <span class="code_number">5</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">legend</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"1"</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"2"</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"3"</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"4"</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"5"</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">style</span>
+            <span class="code_endofline">,</span>
+            <span class="code_operator">[</span>
+            <span class="code_variable">lines</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_operator">[</span>
+            <span class="code_variable">lines</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">1</span>
+            <span class="code_endofline">.</span>
+            <span class="code_number">5</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_operator">[</span>
+            <span class="code_variable">lines</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">2</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_operator">[</span>
+            <span class="code_variable">lines</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">2</span>
+            <span class="code_endofline">.</span>
+            <span class="code_number">5</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_operator">[</span>
+            <span class="code_variable">lines</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">3</span>
+            <span class="code_operator">]</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">ylabel</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"c(t)"</span>
+            <span class="code_operator">]</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\frac{d}{d t} c=\frac{F\, \ensuremath{\mathrm{cin}}}{V}-\frac{F c}{V}\]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}+\ensuremath{\mathrm{\% c}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}-\ensuremath{\mathrm{cin}}+\ensuremath{\mathrm{c0}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{12 t}{7}}} \left( 3 {{\% e}^{\frac{12 t}{7}}}+\ensuremath{\mathrm{c0}}-3\right) \]
+</p>
+    <p>\[\operatorname{	}\]
+</p>
+    <img src="DSC-VI_P-06_htmlimg/DSC-VI_P-06_5.png" width="1198" style="max-width:90%;" loading="lazy" alt=" (Graphics) "/>
+    <br/>
+    <!-- Section cell -->
+    <div class="section">
+      <p>  2 Seasonal flow and constant pollution concentration inflow
+</p>
+    </div>
+    <!-- Text cell -->
+    <div class="comment">c(t): concentration of pollutant in the lake at time t.
+      <br/>F: seasonal flow rate.
+      <br/>V: constant volume of the lake.
+      <br/>cin: constant concentration of pollutant in the flow entering the lake.
+      <br/>initial condition: c(0)=c0.
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_function">kill</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">all</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_operator">:</span>
+            <span class="code_operator">'</span>
+            <span class="code_function">diff</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">=</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">−</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">sol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ode2</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ic1</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">sol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_operator">=</span>
+            <span class="code_variable">c0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">0</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">3</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">28</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">+</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">.</span>
+            <span class="code_number">5</span>
+            <span class="code_operator">·</span>
+            <span class="code_function">sin</span>
+            <span class="code_operator">(</span>
+            <span class="code_number">2</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">π</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_function">wxplot2d</span>
+            <span class="code_operator">(</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">t</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">8</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">legend</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">""</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">ylabel</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"c(t)"</span>
+            <span class="code_operator">]</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\frac{d}{d t} c=\frac{F\, \ensuremath{\mathrm{cin}}}{V}-\frac{F c}{V}\]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}+\ensuremath{\mathrm{\% c}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}-\ensuremath{\mathrm{cin}}+\ensuremath{\mathrm{c0}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{t\, \left( 0.5 \sin{\left( 2 \pi  t\right) }+1\right) }{28}}} \left( 3 {{\% e}^{\frac{t\, \left( 0.5 \sin{\left( 2 \pi  t\right) }+1\right) }{28}}}+\ensuremath{\mathrm{c0}}-3\right) \]
+</p>
+    <p>\[\operatorname{	}\]
+</p>
+    <img src="DSC-VI_P-06_htmlimg/DSC-VI_P-06_11.png" width="1198" style="max-width:90%;" loading="lazy" alt=" (Graphics) "/>
+    <br/>
+    <!-- Section cell -->
+    <div class="section">
+      <p>  3 Constant flow and seasonal pollution concentration inflow
+</p>
+    </div>
+    <!-- Text cell -->
+    <div class="comment">c(t): concentration of pollutant in the lake at time t.
+      <br/>F: constant flow rate.
+      <br/>V: constant volume of the lake.
+      <br/>cin: seasonal concentration of pollutant in the flow entering the lake.
+      <br/>initial condition: c(0)=c0.
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_function">kill</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">all</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_operator">:</span>
+            <span class="code_operator">'</span>
+            <span class="code_function">diff</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">=</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">−</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">sol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ode2</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ic1</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">sol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_operator">=</span>
+            <span class="code_variable">c0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">0</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">+</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">.</span>
+            <span class="code_number">5</span>
+            <span class="code_operator">·</span>
+            <span class="code_function">cos</span>
+            <span class="code_operator">(</span>
+            <span class="code_number">2</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">π</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">28</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">4</span>
+            <span class="code_operator">·</span>
+            <span class="code_number">12</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_function">wxplot2d</span>
+            <span class="code_operator">(</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">t</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">8</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">legend</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">""</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">ylabel</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"c(t)"</span>
+            <span class="code_operator">]</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\frac{d}{d t} c=\frac{F\, \ensuremath{\mathrm{cin}}}{V}-\frac{F c}{V}\]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}+\ensuremath{\mathrm{\% c}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}-\ensuremath{\mathrm{cin}}+\ensuremath{\mathrm{c0}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{12 t}{7}}} \left( -0.5 \cos{\left( 2 \pi  t\right) }+{{\% e}^{\frac{12 t}{7}}} \left( 0.5 \cos{\left( 2 \pi  t\right) }+1\right) +\ensuremath{\mathrm{c0}}-1\right) \]
+</p>
+    <p>\[\operatorname{	}\]
+</p>
+    <img src="DSC-VI_P-06_htmlimg/DSC-VI_P-06_17.png" width="1198" style="max-width:90%;" loading="lazy" alt=" (Graphics) "/>
+    <br/>
+    <!-- Section cell -->
+    <div class="section">
+      <p>  4 Seasonal flow and seasonal pollution concentration inflow
+</p>
+    </div>
+    <!-- Text cell -->
+    <div class="comment">c(t): concentration of pollutant in the lake at time t.
+      <br/>F: seasonal flow rate.
+      <br/>V: constant volume of the lake.
+      <br/>cin: seasonal concentration of pollutant in the flow entering the lake.
+      <br/>initial condition: c(0)=c0.
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_function">kill</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">all</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_operator">:</span>
+            <span class="code_operator">'</span>
+            <span class="code_function">diff</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">=</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">−</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">sol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ode2</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">eqn1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ic1</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">sol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c</span>
+            <span class="code_operator">=</span>
+            <span class="code_variable">c0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">0</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">fsol1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">cin</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">+</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">.</span>
+            <span class="code_number">5</span>
+            <span class="code_operator">·</span>
+            <span class="code_function">cos</span>
+            <span class="code_operator">(</span>
+            <span class="code_number">2</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">π</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">V</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">28</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">F</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">+</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">.</span>
+            <span class="code_number">5</span>
+            <span class="code_operator">·</span>
+            <span class="code_function">sin</span>
+            <span class="code_operator">(</span>
+            <span class="code_number">2</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">π</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">t</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ev</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">c0</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_function">wxplot2d</span>
+            <span class="code_operator">(</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">v1</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">t</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">8</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">legend</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">""</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>         
+            <span class="code_operator">[</span>
+            <span class="code_variable">ylabel</span>
+            <span class="code_endofline">,</span>
+            <span class="code_string">"c(t)"</span>
+            <span class="code_operator">]</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\frac{d}{d t} c=\frac{F\, \ensuremath{\mathrm{cin}}}{V}-\frac{F c}{V}\]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}+\ensuremath{\mathrm{\% c}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{F t}{V}}} \left( \ensuremath{\mathrm{cin}} {{\% e}^{\frac{F t}{V}}}-\ensuremath{\mathrm{cin}}+\ensuremath{\mathrm{c0}}\right) \]
+</p>
+    <p>\[\operatorname{	}c={{\% e}^{-\frac{t\, \left( 0.5 \sin{\left( 2 \pi  t\right) }+1\right) }{28}}} \left( -0.5 \cos{\left( 2 \pi  t\right) }+{{\% e}^{\frac{t\, \left( 0.5 \sin{\left( 2 \pi  t\right) }+1\right) }{28}}} \left( 0.5 \cos{\left( 2 \pi  t\right) }+1\right) +\ensuremath{\mathrm{c0}}-1\right) \]
+</p>
+    <p>\[\operatorname{	}\]
+</p>
+    <img src="DSC-VI_P-06_htmlimg/DSC-VI_P-06_23.png" width="1198" style="max-width:90%;" loading="lazy" alt=" (Graphics) "/>
+    <br/>
+    <hr/>
+    <p>
+      <small> Created with 
+        <a href="https://wxMaxima-developers.github.io/wxmaxima/">wxMaxima</a>.</small>
+    </p>
+    <small> The source of this Maxima session can be downloaded 
+      <a href="DSC-VI_P-06_htmlimg/DSC-VI_P-06.wxmx">here</a>.</small>
+  </body>
+</html>

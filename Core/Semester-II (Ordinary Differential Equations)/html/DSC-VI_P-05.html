@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DSC-VI_P-05</title>
+    <meta name="generator" content="wxMaxima"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/x-mathjax-config">  MathJax.Hub.Config({
+    displayAlign: "left",
+    context: "MathJax",
+    TeX: {TagSide: "left"}
+  })
+</script>
+    <script id="MathJax-script" type="application/javascript" async="true" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">  // A comment that hinders wxWidgets from optimizing this tag too much.
+</script>
+    <link rel="stylesheet" type="text/css" href="DSC-VI_P-05_htmlimg/DSC-VI_P-05.css"/>
+  </head>
+  <body>
+    <!-- ****************************************************** -->
+    <!-- *        Created with wxMaxima version 23.05.1       * -->
+    <!-- ****************************************************** -->
+    <noscript>
+      <div class="error message">
+        <p>Please enable JavaScript in order to get a 2d display of the equations embedded in this web page.</p>
+      </div>
+    </noscript>
+    <p hidden="hidden">\(      \DeclareMathOperator{\abs}{abs}
+      \newcommand{\ensuremath}[1]{\mbox{$#1$}}
+\)</p>
+    <!-- Text cell -->
+    <div class="comment">Lucky Lao
+</div>
+    <!-- Title cell -->
+    <div class="title">
+      <p>DSC-VI : Practical-05
+</p>
+    </div>
+    <!-- Title cell -->
+    <div class="title">
+      <p>Method of Variation of Parameters
+</p>
+    </div>
+    <!-- Section cell -->
+    <div class="section">
+      <p>  1 Solve y'' - y = x
+</p>
+    </div>
+    <!-- Text cell -->
+    <div class="comment">Sol: The general solution comprises of two parts: y = y_c + y_p
+</div>
+    <!-- Text cell -->
+    <div class="comment">We have:
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_variable">de</span>
+            <span class="code_operator">:</span>
+            <span class="code_operator">'</span>
+            <span class="code_function">diff</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">y</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">x</span>
+            <span class="code_endofline">,</span>
+            <span class="code_number">2</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">−</span>
+            <span class="code_variable">y</span>
+            <span class="code_operator">=</span>
+            <span class="code_variable">x</span>
+            <span class="code_endofline">;</span>     
+            <span class="code_comment">/* our d.e. */</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">hp</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">lhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">de</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">=</span>
+            <span class="code_number">0</span>
+            <span class="code_endofline">$</span>    
+            <span class="code_comment">/* homogeneous part */</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">r</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">de</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>         
+            <span class="code_comment">/* `r` i.e. non-homogeneous part */</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\frac{{{d}^{2}}}{d {{x}^{2}}} y-y=x\]
+</p>
+    <!-- Subsection cell -->
+    <div class="subsect">
+      <p>  1.1 Calculating y_c
+</p>
+    </div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_variable">y_c</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">rhs</span>
+            <span class="code_operator">(</span>
+            <span class="code_function">ode2</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">hp</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">y</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">x</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">y_1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">exp</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">x</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">y_2</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">exp</span>
+            <span class="code_operator">(</span>
+            <span class="code_endofline">−</span>
+            <span class="code_variable">x</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">$</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\ensuremath{\mathrm{\% k1}} {{\% e}^{x}}+\ensuremath{\mathrm{\% k2}} {{\% e}^{-x}}\]
+</p>
+    <!-- Subsection cell -->
+    <div class="subsect">
+      <p>  1.2 Calculating y_p
+</p>
+    </div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_variable">A</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">matrix</span>
+            <span class="code_operator">(</span>
+            <span class="code_endofline">
+              <br/>
+            </span>    
+            <span class="code_operator">[</span>
+            <span class="code_variable">y_1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">y_2</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">,</span>
+            <span class="code_endofline">
+              <br/>
+            </span>    
+            <span class="code_operator">[</span>
+            <span class="code_function">diff</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">y_1</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">x</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">,</span>
+            <span class="code_function">diff</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">y_2</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">x</span>
+            <span class="code_operator">)</span>
+            <span class="code_operator">]</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\begin{pmatrix}{{\% e}^{x}} &amp; {{\% e}^{-x}}\\
+{{\% e}^{x}} &amp; -{{\% e}^{-x}}\end{pmatrix}\]
+</p>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_variable">W</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">determinant</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">A</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}-2\]
+</p>
+    <!-- Text cell -->
+    <div class="comment">We now find u_1 and u_2
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_variable">u_1</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">integrate</span>
+            <span class="code_operator">(</span>
+            <span class="code_endofline">−</span>
+            <span class="code_variable">y_2</span>
+            <span class="code_endofline">·</span>
+            <span class="code_variable">r</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">W</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">x</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+            <span class="code_endofline">
+              <br/>
+            </span>
+            <span class="code_variable">u_2</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">integrate</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">y_1</span>
+            <span class="code_endofline">·</span>
+            <span class="code_variable">r</span>
+            <span class="code_operator">/</span>
+            <span class="code_variable">W</span>
+            <span class="code_endofline">,</span>
+            <span class="code_variable">x</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}\frac{\left( -x-1\right)  {{\% e}^{-x}}}{2}\]
+</p>
+    <p>\[\operatorname{	}-\frac{\left( x-1\right)  {{\% e}^{x}}}{2}\]
+</p>
+    <!-- Text cell -->
+    <div class="comment">Now, our y_p is:
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_variable">y_p</span>
+            <span class="code_operator">:</span>
+            <span class="code_function">ratsimp</span>
+            <span class="code_operator">(</span>
+            <span class="code_variable">u_1</span>
+            <span class="code_endofline">·</span>
+            <span class="code_variable">y_1</span>
+            <span class="code_operator">+</span>
+            <span class="code_variable">u_2</span>
+            <span class="code_operator">·</span>
+            <span class="code_variable">y_2</span>
+            <span class="code_operator">)</span>
+            <span class="code_endofline">;</span>    
+            <span class="code_comment">/* this will return a simplified expression */</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}-x\]
+</p>
+    <!-- Subsection cell -->
+    <div class="subsect">
+      <p>  1.3 General Solution
+</p>
+    </div>
+    <!-- Text cell -->
+    <div class="comment">The general solution (y=y_c+y_p):
+</div>
+    <!-- Code cell -->
+    <table>
+      <tr>
+        <td>
+          <span class="prompt"> --&gt;	
+  </span>
+        </td>
+        <td>
+          <span class="input">
+            <span class="code_operator">'</span>
+            <span class="code_variable">y</span>
+            <span class="code_operator">=</span>
+            <span class="code_variable">y_c</span>
+            <span class="code_operator">+</span>
+            <span class="code_variable">y_p</span>
+            <span class="code_endofline">;</span>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <p>\[\operatorname{	}y=\ensuremath{\mathrm{\% k1}} {{\% e}^{x}}+\ensuremath{\mathrm{\% k2}} {{\% e}^{-x}}-x\]
+</p>
+    <hr/>
+    <p>
+      <small> Created with 
+        <a href="https://wxMaxima-developers.github.io/wxmaxima/">wxMaxima</a>.</small>
+    </p>
+    <small> The source of this Maxima session can be downloaded 
+      <a href="DSC-VI_P-05_htmlimg/DSC-VI_P-05.wxmx">here</a>.</small>
+  </body>
+</html>
