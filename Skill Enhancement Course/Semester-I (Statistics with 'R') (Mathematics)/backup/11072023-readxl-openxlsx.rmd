@@ -1,0 +1,287 @@
+---
+title: "readxl and openxlsx"
+author: "You"
+date: "2023-11-07"
+output: 
+  html_document: 
+    toc: yes
+    highlight: kate
+    theme: spacelab
+---
+
+```{r}
+# Add packages to library
+library(readxl)
+library(openxlsx)
+```
+
+# Functions with Syntax
+
+1. `write`.`xlsx`(`dataframe`, "`filename.xlsx`")
+  
+    - Writes the `dataframe` to a file named `filename.xlsx`.
+    - A Workbook object is returned
+    - Please note that this function is only for .xlsx files
+
+2. `read`.`xlsx`("`filename.xlsx`")
+
+    - Reads `filename.xlsx` 
+    - A data frame is returned
+
+3. For Vectors
+    a. `write`(`data`, `file`=`filename.ext`, `ncolumns`=if(is.character(`data`)) 1 else 5, `sep`=" ")
+    
+    b. `cat`(`data`, `file`=`filename.txt`, `sep`=" ")
+
+4. For 2-D Data Structures
+    a. `write`.`csv`(`data`, `file`="`filename.txt`")
+    b. `write`.`table`(`data`, `file`="`filename.txt`")
+
+5. For Lists (explore)
+    a. `dget`()
+    b. `dput`()
+    c. `lapply`(`data`, `fun`)
+    d. `sapply`(`data`, `fun`)
+
+6. `apply`(`data`, `margin`, `fun`)
+    
+    - `margin` = 1 (row) or 2 (column)
+    - `fun`: any function
+
+**NOTE**:
+
+- `is`.`<class>`(`data`)
+
+    - Checks if the `data` is of the class `<class>`.
+    - E.g. `is.numeric(data)` checks if data is numeric
+
+- `as`.`class`(`data`)
+
+    Converts the class of `data` to `<class>`
+
+`read`  - **Extract** data
+
+`write` - **Modify**  data
+
+# Converting a Data Frame to Excel Workbook
+
+```{r}
+getwd()
+
+head(mtcars)
+class(mtcars)
+
+# To store a Workbook object in cars.
+cars <- write.xlsx(mtcars, "cars.xlsx")
+## The workbook object converts `mtcars` 
+## into an Excel Workbook named `cars.xlsx`
+
+cars # Workbook object
+
+my_wbook <- write.xlsx(iris, "23bmat019.xlsx")
+my_wbook
+```
+
+# (Reading Files into R) Converting an Excel Workbook to a Data Frame 
+
+```{r}
+my_df <- read.xlsx("cars.xlsx")
+head(my_df)
+```
+
+
+# Reading and Writing `.csv` files
+
+```{r}
+# Writing `iris` to `my_iris.csv`
+my_iris <- write.csv(iris, "my_iris.csv")
+my_iris # NULL
+
+# Reading `my_iris.csv`
+my_df2 <- read.csv("my_iris.csv")
+head(my_df2)
+```
+
+# Writing Vectors into the Disk
+
+```{r}
+x <- c("a", "b", "c") # character data
+write(x, file="my_vectx.txt")
+write(x, file="my_vectx.csv") # doesn't require packages
+
+y <- letters # character data
+write(y, file="my_vecty.txt") # 1 element per row
+
+z <- 1:35 # numeric data; more than 5 elements
+write(z, file="my_vectz.txt") # 5 elements per row
+
+write(z, file="my_vectz.csv", sep=",")
+# without sep="," 5 elements are clubbed within a cell separated by spaces
+
+# *(refer to syntax; ncolumns)
+# if the class of data is character, the number of columns will be 1
+# else 5 for any other class
+
+p <- c(3, 5, 8, 9, 5, 2)
+cat(p, file="my_vectp_cat.txt") # all elements in a single row
+cat(p, file="my_vectp_cat.csv", sep=",")
+write(p, file="my_vectp_write.txt")
+```
+
+
+# Writing Matrices and Data Frames into the Disk
+
+```{r}
+### Matrices
+a <- matrix(1:9, 3)
+
+# column names will be generated
+# write.csv() has "," as default separator
+write.csv(a, "my_matrix_csv.txt")
+write.csv(a, "my_matrix_csv.csv")
+
+# write.table() has " " as default separator
+write.table(a, "my_matrix_table.txt", sep=",")
+write.table(a, "my_matrix_table.csv", sep=",")
+
+### Data Frames
+write.csv(iris, "my_df_csv.txt")
+write.csv(iris, "my_df_csv.csv")
+
+# write.table() has " " as default separator
+write.table(iris, "my_df_table.txt", sep=",")
+write.table(iris, "my_df_table.csv", sep=",")
+```
+
+# Writing Lists into the Disk (Homework)
+
+# Summary Statistics
+
+## For Vector Objects (previously done)
+
+## For Matrix Objects
+
+```{r}
+# R treats matrices like vectors
+
+a1 = round(runif(9, 2, 89))
+m1 <- matrix(a1, 3, 3,
+             dimnames = list(
+               c("Jan", "Feb", "Mar"),
+               c("Day1", "Day2", "Day3")
+             ))
+m1
+length(m1)
+dim(m1)
+nrow(m1)
+ncol(m1)
+
+sum(m1) # sum of all matrix entries
+rowSums(m1) # sums of each row
+colSums(m1) # sums of each column
+
+mean(m1) # mean of all matrix entries
+rowMeans(m1) # means of each row
+colMeans(m1) # means of each column
+
+var(m1) # variance of all matrix entries
+# there is no rowVar and colVar command,
+# instead apply() command may be used
+# it can also be used for sums and means
+```
+
+### `apply()` command
+```{r}
+m2 = matrix(round(runif(9, 1, 99)),
+            3, 3,
+            dimnames = list(
+              month.name[1:3],
+              c("Day1", "Day2", "Day3")
+            ))
+m2
+
+# the following pairs of lines are equivalent
+apply(m2, 1, sum)
+rowSums(m2)
+
+apply(m2, 2, mean)
+colMeans(m2)
+
+# this will help us to map other functions on matrix dimensions
+apply(m2, 1, sd) # sd of each row
+apply(m2, 2, var) # variance of each column
+apply(m2, 2, length) # length of each column
+```
+
+## For Data Frames (explore)
+
+## For Lists
+
+`lapply`() and `sapply`() will be used
+
+```{r}
+l1 = list(
+  1:3,
+  letters[1:5],
+  c(3, 0, 6, -2, 2)
+)
+l1
+
+lapply(l1, max) # output in list
+sapply(l1, max) # output in vector
+```
+
+
+# Class Exercises
+
+Q.1 Create a \(3 \times 3\) matrix and - 
+```{r}
+# initialise matrix for questions
+my_matrix <- matrix(round(runif(9, 1, 99)),
+                    3, 3,
+                    dimnames = list(
+                      LETTERS[1:3],
+                      c("Week1", "Week2", "Week3")
+                    ))
+my_matrix
+```
+
+a. Find the variance of first and third column
+
+```{r}
+# Approaches (2):
+# 1. Extract first and third columns and calculate variance.
+var(my_matrix[,1])
+var(my_matrix[,3])
+
+# 2. Calculate variance for all columns and extract the first and third.
+colVars = apply(my_matrix, 2, var)
+colVars[1]
+colVars[3]
+```
+
+
+b. Find the maximum of second and third row
+```{r}
+rowMax = apply(my_matrix, 1, max)
+rowMax[1]
+rowMax[3]
+```
+
+c. Find the median of first and second column
+```{r}
+colMedians = apply(my_matrix, 2, median)
+colMedians[1]
+colMedians[2]
+```
+
+Q.2 Get the first 10 rows of `mtcars`
+```{r}
+my_df <- head(mtcars, 10)
+```
+
+a. Find the median of each column
+```{r}
+apply(my_df, 2, median)
+```
+
