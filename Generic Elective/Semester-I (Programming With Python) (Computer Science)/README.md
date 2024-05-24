@@ -18,7 +18,7 @@ Practical Questions for UoD (NEP-UGCF) Year-I Generic Elective-I (Computer Scien
     This program may be done using functions
   </li>
   <li>
-    WAP to create a pyramid of the character ‘*’ and a reverse pyramid<br>
+    WAP to create a pyramid of the character ‘*’ and a reverse pyramid
     <code>
           *                        
          ***                       
