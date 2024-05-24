@@ -1,0 +1,163 @@
+---
+title: "ggplot Package"
+author: "23BMAT019"
+date: "2023-10-27"
+output: 
+  html_document: 
+    toc: yes
+    highlight: kate
+    theme: spacelab
+---
+
+```{r}
+library("dplyr")
+library("ggplot2")
+library("ggplot2movies")
+library("Hmisc")
+library("tidyverse")
+```
+
+Key Points:
+
+- data
+- mapping (aesthetics [x v/s y])
+- geometric interpretation
+- statistics
+- facet
+- co-ordinate space
+- label
+- theme
+
+`+` is used to join the commands
+
+# Scatter Plot and Regression
+
+## Example (BOD: Biochemical Oxygen Demand)
+```{r}
+View(BOD)
+
+#ggplot(BOD, aes(Time, demand))
+BOD %>%
+  ggplot(aes(Time, demand))+
+  geom_line(size=2, color="maroon")+
+  geom_point(size=4, color="darkblue")+
+  theme_classic()
+```
+
+## Example (CO2)
+```{r}
+View(CO2)
+
+CO2 %>%
+  ggplot(aes(conc, uptake, color=Treatment))+
+  #ggplot(aes(conc, uptake, color=Plant))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)+
+  facet_wrap(~Type)+ # Preferably use factor columns
+  labs(title="Conc of CO2")+
+  theme_dark()
+
+# lm: linear model
+# se: standard error
+```
+
+## Example (mpg)
+```{r}
+View(mpg)
+#1 Plot something for the data where `cty` < 20
+mpg %>% filter(cty < 20) %>%
+  ggplot(aes(displ, cty))+
+  geom_point(aes(color=drv))+
+  geom_smooth(method=lm, se=F, color="maroon")+
+  facet_wrap(~cyl)+
+  labs(x="Engine Size", y="City miles per Gallon", title="Fuel Efficiency")+
+  theme_bw()
+```
+
+# Boxplot
+
+## Example (CO2)
+```{r}
+CO2 %>% ggplot(aes(Treatment, uptake))+
+  geom_boxplot()+
+  geom_point(aes(color=Plant, size=conc))+
+  facet_wrap(~Plant)+
+  labs(title="Boxplot")+
+  coord_flip()+
+  theme_bw()
+```
+
+# Example (chickwts)
+```{r}
+chickwts %>% ggplot(aes(x=reorder(feed, weight), y=weight, fill=feed))+
+  geom_boxplot(outlier.colour = "red", alpha=1.9, outlier.shape = 3, outlier.size = 3)+# to hide the outliers, use outliers.shape=NA
+  #coord_flip()+ # for horizontal boxplots, use coordinate flip
+  geom_jitter(colour="green", size=0.3)+ # to get the points, use geom_point() but those points overlap each other. geom_jitter() is used to avert overlapping
+  stat_boxplot(geom="errorbar", width=0.2)+ # to add the lines at end of each boxplot line
+  stat_summary(fun=mean, geom="point", col="maroon", size=2)+ # to add a mean in form of point in maroon of size 2
+  #stat_summary(fun.data=mean_cl_normal, geom="linerange", col="yellow")+
+  labs(title="Box Plot")+
+  labs(subtitle="with additional conditions")+
+  theme_dark()
+
+# we can fill the colour inside geom_boxplot(): geom_boxplot(fill="green")
+
+# higher the alpha in ]0,1[, lower the transparency
+
+# to reorder with a specific condition, use reordr in aes(x=(a,b)) read as 'on x-axis reorder a according to b' (for descending use -b)
+```
+
+# Histogram
+
+## Example (msleep)
+```{r}
+msleep %>% ggplot(aes(x=awake))+ # y will be the frequency
+  geom_histogram(binwidth = 1, # size of each bin
+                 aes(y=..density..), # density function
+                 color="green",
+                 fill="purple")+
+  labs(x="Total Sleep", y=NULL,
+       title="Histogram",
+       subtitle="Of Total Sleep")+
+  theme_dark()
+```
+
+## Example (Plotting the density function)
+```{r}
+data = data.frame(x=rnorm(1E+5))
+data %>% ggplot(aes(x))+
+  geom_histogram(aes(y=..density..), color="green", fill="lightblue")+
+  stat_function(fun=dnorm, 
+                args=list(mean=mean(data$x),
+                          sd=sd(data$x)),
+                color="red",
+                size=3)+
+  labs(title="Histogram and Density Function")+
+  theme_bw()
+
+
+# dnorm(a) density function of normal distribution
+
+```
+
+
+# Bar plots
+
+## Single Category Bar Plot
+```{r}
+msleep %>% drop_na(vore) %>% ggplot(aes(x=vore))+
+  geom_bar(fill="darkblue", color="red")+
+  coord_flip()+
+  labs(title="Single Category Barplot",
+       subtitle="msleep")+
+  theme_bw()
+```
+
+## Two Category Bar Plot
+```{r}
+starwars %>% drop_na(hair_color) %>% drop_na(species) %>% drop_na(homeworld) %>% filter(hair_color == "black" | hair_color == "brown") %>% ggplot(aes(hair_color, color=homeworld, fill=gender))+
+  facet_wrap(~species)+
+  geom_bar(position="dodge")+ # for grouped bar plot use position="dodge"
+  labs(x="Hair Colour", y="Count",
+       title="Hair Color for Different Species")
+```
