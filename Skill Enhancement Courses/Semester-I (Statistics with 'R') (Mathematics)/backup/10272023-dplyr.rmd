@@ -1,0 +1,223 @@
+---
+title: "dplyr Package"
+author: "23BMAT019"
+date: "2023-10-20"
+output: 
+  html_document: 
+    toc: yes
+    highlight: kate
+    theme: spacelab
+---
+# Adding `dplyr`
+```{r}
+library(dplyr)
+library(ggplot2)
+library(hflights)
+```
+
+# Chaining and Pipelining
+**Syntax**: x `%>%` f() `# means f(x)`
+
+This process is called chaining. 
+
+```{r}
+# %>% pipeline symbol: 
+a <- 1:5
+sum(a)
+#a %>% sum()
+
+# sqrt(sum((x1-x2)^2)), where x1 and x2 are vectors.
+x1 <- 1:5
+x2 <- x1 + 1
+
+sqrt(sum((x1-x2)^2))
+#(x1-x2)^2 %>% sum() %>% sqrt()
+```
+
+# `dplyr` functionality
+
+Five Basic verbs: `filter`, `select`, `arrange`, `mutate`, and `summarise`
+
+## Extract Cases
+
+### `filter`: keep rows satisfying a specific condition
+**Syntax**: `filter`(`data`, `condition`, ...)
+
+Example 1
+```{r}
+#1 Find the rows where Sepal.Length > 5
+filter(iris, Sepal.Length > 5) # `$` is not needed
+
+#2 Find the rows where Sepal.Length > 4 and Species is setosa
+filter(iris, Sepal.Length > 4 & Species=="setosa")
+
+#3 Find the rows where Sepal.Length > 2 or Species is setosa
+filter(iris, Sepal.Length > 2 | Species=="setosa")
+
+#4 Find the rows where Species is either setosa or versicolor
+filter(iris, Species=="setosa" |  Species=="versicolor")
+filter(iris, Species %in% c("setosa", "versicolor")) # Alternative
+```
+
+Example 2
+```{r}
+View(hflights)
+
+#1 Find all the flights on Jan 1
+
+## with dplyr
+### without chaining
+filter(hfilghts, Month==1 & DayofMonth==1)
+### with chaining [HW]
+
+## without dplyr
+### without attach/detach
+hflights[hflights$Month==1 & hflights$DayofMonth==1,]
+### without attach/detach
+attach(hflights)
+hflights[Month==1 & DayofMonth==1,]
+detach(hflights)
+
+#2 All flights of UniqueCarrier AA or UA
+
+## with dplyr
+filter(hflights, UniqueCarrier %in% c("AA", "UA"))
+## without dplyr
+hflights[hflights$UniqueCarrier %in% c("AA", "UA"), ]
+```
+
+## Extract Variables
+
+### `select`: pick column by name
+**Syntax**: `select`(`data`, `col1`, `col2`, ...)
+
+Example 1
+```{r}
+#1 Extract the data for Sepal.Length and Petal.Length
+select(iris, Sepal.Length, Petal.Length)
+
+#2 Extract the column which start with Petal
+select(iris, starts_with("Petal"))
+
+#3 Extract the column which end with Length
+select(iris, ends_with("Length"))
+
+#4 Extract the column which start with Sepal and contains Species.
+select(iris, starts_with("Sepal"), Species) # Logically incorrect
+select(iris, starts_with("Sepal"), contains("Species"))
+
+#5 Extract the column which start with Sepal and contains Length.
+select(iris, starts_with("Sepal"), contains("Length")) # 3 columns
+
+#6 Select DepTime, ArrTime and FlightNum columns
+## with dplyr
+select(hflights, DepTime, ArrTime, FlightNum)
+## without dplyr
+hflights[,c("DepTime", "ArrTime", "FlightNum")]  # using [,col]
+hflights[c("DepTime", "ArrTime", "FlightNum")]   # using [col]
+
+#7 Select multiple continuous columns
+# i. from DayofMonth to FlightNum
+select(hflights, DayofMonth:FlightNum)
+
+# ii. from Year to ArrTime and alongwith columns that contain "Taxi" and "Delay"
+select(hflight, Year:ArrTime, contains("Taxi"), contains("Delay"))
+```
+
+Example 2
+```{r}
+# CQ1. Select UniqueCarrier and DepDelay Column and filter for Departure delays over 60 minutes
+filter(select(hflights, UniqueCarrier, DepDelay), DepDelay > 60)
+## find dimensions
+dim(filter(select(hflights, UniqueCarrier, DepDelay), DepDelay > 60))
+
+## use chaining
+hflights %>% select(UniqueCarrier, DepDelay) %>% filter(DepDelay > 60)
+hflights %>% select(UniqueCarrier, DepDelay) %>% filter(DepDelay > 60) %>% dim()
+```
+
+## Arranging
+
+### `arrange`: To reorder the rows
+**Syntax**: `arrange`(`data`, `parameter`)
+
+```{r}
+#1 Select  UniqueCarrier and DepDelay columns and sort by DepDelay
+select(hflights, UniqueCarrier, DepDelay)
+arrange(select(hflights, UniqueCarrier, DepDelay), DepDelay)
+## Chaining Counterpart
+hflights %>% select(UniqueCarrier, DepDelay) %>% arrange(DepDelay)
+## Descending
+hflights %>% select(UniqueCarrier, DepDelay) %>% arrange(desc(DepDelay))
+```
+
+
+## Mutating
+
+### `mutate`: To add a new variable i.e. column to an existing data frame
+**Syntax**: `mutate`(`data`, `new_colname`=`definition`)
+
+Example 1
+```{r}
+str(iris)
+rm(iris) # to remove the data
+
+# mutate is temporary
+mutate(iris, Sepal.Mean=mean(c(Sepal.Length, Sepal.Width))) %>% head()
+
+# instead assign mutate to the dframe itself
+iris <- mutate(iris, Sepal.Mean=mean(c(Sepal.Length, Sepal.Width)))
+str(iris)
+```
+
+Example 2
+```{r}
+str(hflights)
+hflights %>% mutate(Speed=Distance/ArrTime)
+str(hflights)
+```
+
+
+## Summarising
+
+### `summarise`: To reduce the variables to values
+
+- Primarily useful for the data that has been grouped by one or more variables.
+- For grouping we use `group_by()` which creates the groups that will be operated on.
+- `summarise()` uses the provided aggregation funciton to summarise each group.
+
+```{r}
+head(hflights)
+## (Grouping related to one column)
+#1 Create a table grouped by `UniqueCarrier`, and then
+#  summarise each group by taking the mean of `ArrDelay`
+
+hflights %>% group_by(UniqueCarrier) %>% summarise(mean(ArrDelay, na.rm=T))
+# there are 15 groups in total
+# na.rm=T removes na entries
+
+## (Grouping related to mulitple-columns)
+#2 For each UniqueCarrier calculate
+# the percentage of flights cancelled or diverted
+
+# SYNTAX: data %>% summarise_each(funs(fn1, fn2, ...), col1, col2, ...)
+
+hflights %>% group_by(UniqueCarrier) %>% summarise_each(funs(mean(., na.rm=T)), Cancelled, Diverted, na.rm=T)
+# `.` in mean(., na.rm=T) represents an arbitrary data
+# So, mean(., na.rm=T) calculates the mean of non-NA data
+
+## ()
+#3 For each destination, calculate the minimum
+# and maximum rrival and departure delays
+
+hflights %>% group_by(Dest) %>% summarise_each(funs(max(., na.rm=T), min(., na.rm=T)), ArrDelay, DepDelay)
+
+## ()
+#4 For each day of the year, count the total number
+# of flights and sort in descending order
+
+# SYNTAX: `n`() # to count the number of rows in a group
+# SYNTAX: `n_distinct`(`vector`) # to count the number of unique items in a vector
+
+hflights %>% group_by(Month, DayofMonth) %>% summarise(flight_count=n()) %>% arrange(desc(flight_count))
+```
