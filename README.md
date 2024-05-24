@@ -6,15 +6,15 @@ A repository, acting as a backup, which will provide an abode to my practicals/n
 <ul>
   <li>Core</li>
   <ol>
-    <li>`Semester-1` Probability and Statistics</li>
-    <li>`Semester-2`Ordinary Differential Equations</li>
+    <li><tt>Semester-1</tt> Probability and Statistics</li>
+    <li><tt>Semester-2</tt> Ordinary Differential Equations</li>
   </ol>
   <li>Generic Elective</li>
   <ol>
-    <li>`Semester-1` Programming With Python (Department of Computer Science)</li>
+    <li><tt>Semester-1</tt> Programming With Python (Department of Computer Science)</li>
   </ol>
   <li>Skill Enhancement Course</li>
   <ol>
-    <li>`Semester-1` Statistics with 'R' (Department of Mathematics)</li>
+    <li><tt>Semester-1</tt> Statistics with 'R' (Department of Mathematics)</li>
   </ol>
 </ul>
